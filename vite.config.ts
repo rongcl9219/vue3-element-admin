@@ -1,10 +1,7 @@
-import { defineConfig } from 'vite'
+import { defineConfig, UserConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { resolve } from 'path'
 import viteCompression from 'vite-plugin-compression'
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import DefineOptions from 'unplugin-vue-define-options/vite'
 import { createHtmlPlugin } from 'vite-plugin-html'
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 
@@ -25,14 +22,14 @@ const viteCompressionOptions = {
 
 const pageName = 'vue Element Admin'
 
-export default defineConfig(({ command }) => {
+export default defineConfig(({ command }): UserConfig => {
     const buildPlugins = []
     if (command === 'build') {
         buildPlugins.push(viteCompression(viteCompressionOptions))
     }
 
     return {
-        plugins: [vue(), DefineOptions(),
+        plugins: [vue(),
             createHtmlPlugin({
                 inject: {
                     data: {
@@ -59,7 +56,6 @@ export default defineConfig(({ command }) => {
         },
         server: {
             open: false,
-            https: false,
             host: '0.0.0.0',
             port: 5173, // 端口
             // proxy: {
